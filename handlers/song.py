@@ -32,7 +32,7 @@ def song(client, message):
     for i in message.command[1:]:
         query += " " + str(i)
     print(query)
-    m = message.reply("🔎 finding song...")
+    m = message.reply("🔎 Finding song...")
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
@@ -52,13 +52,13 @@ def song(client, message):
         m.edit("❌ song not found.\n\nplease give a valid song name.")
         print(str(e))
         return
-    m.edit("📥 downloading...")
+    m.edit("📥 Downloading...")
     try:
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = f"**🎧 Uploader @{bn}**"
+        rep = "**🎧 Uploaded By @PrincexPersonalBot**"
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(dur_arr[i]) * secmul
@@ -73,7 +73,7 @@ def song(client, message):
         )
         m.delete()
     except Exception as e:
-        m.edit("❌ error, wait for dev to fix")
+        m.edit("❌ Error, Wait for Dev to Fix")
         print(e)
 
     try:
@@ -250,14 +250,14 @@ async def ytmusic(client, message: Message):
     global is_downloading
     if is_downloading:
         await message.reply_text(
-            "❗ another download is in progress, try again after sometime."
+            "❗ Another Download is in Progress, Try Again After Sometime."
         )
         return
 
     urlissed = get_text(message)
 
     pablo = await client.send_message(
-        message.chat.id, f"💡 __Getting {urlissed} from youtube server, please wait...__"
+        message.chat.id, "💡 **Your Video Getting From Youtube Server, Please wait...**"
     )
     if not urlissed:
         await pablo.edit("invalid command syntax, please check help menu to know more!")
@@ -307,7 +307,7 @@ async def ytmusic(client, message: Message):
 
     c_time = time.time()
     file_stark = f"{ytdl_data['id']}.mp4"
-    capy = f"✨ **video name :** __{thum}__ \n💭 **request by:** __{urlissed}__ \n📣 **channel :** __{thums}__ \n📌 **link :** [click here]({mo})"
+    capy = f"✨ **Video name :** __{thum}__ \n💭 **Request by:** __{urlissed}__ \n📣 **Channel :** __{thums}__ \n📌 **Link :** [click here]({mo})"
     await client.send_video(
         message.chat.id,
         video=open(file_stark, "rb"),
@@ -320,7 +320,7 @@ async def ytmusic(client, message: Message):
         progress_args=(
             pablo,
             c_time,
-            f"`📤 Uploading {urlissed} song from youtube music!`",
+            "**📤 Uploading Song from Youtube Music!**",
             file_stark,
         ),
     )
